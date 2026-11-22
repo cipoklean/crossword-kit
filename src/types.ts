@@ -15,6 +15,8 @@ export interface Puzzle {
   grid: Grid;
   clues: { across: Record<number, string>; down: Record<number, string> };
   solveUrl: string;
+  /** A line or two from the editor, at the foot of the email and the answer key. */
+  note: string;
 }
 
 export interface Square {

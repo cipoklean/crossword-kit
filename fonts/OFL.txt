@@ -1,4 +1,5 @@
-Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"
+Newsreader: Copyright 2020 The Newsreader Project Authors (https://github.com/productiontype/Newsreader)
+Hanken Grotesk: Copyright 2021 The Hanken Grotesk Project Authors (https://github.com/marcologous/hanken-grotesk)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 

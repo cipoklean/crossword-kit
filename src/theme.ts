@@ -1,46 +1,72 @@
 import { defineTheme } from "@hyper-elements/react";
 
-// "Sheet and biro" (taste-skill palette white-link-blue): white paper, black type,
-// one grey for secondary lines, one pale grey step for cards, and biro blue used once,
-// for the one action: solve online.
+// "Plaster and rose" (taste-skill palette plaster-rose): the warm off-white of a weekend paper's
+// puzzle page, brown-black ink for type and blocks, and deep rose used once per output, for the
+// one thing to do next (solve online). Newsreader, a text serif made for news, sets the puzzle;
+// Hanken Grotesk sets the small numbers and labels. Contrast on paper: ink 13.5:1, muted 6.2:1, rose 6.0:1.
 export const crosswordTheme = defineTheme({
   colors: {
-    background: "#ffffff",
-    foreground: "#111111",
-    primary: "#111111",
-    primaryForeground: "#ffffff",
-    surface: "#f4f4f4",
-    muted: "#5f5f5f", // 6.4:1 on white, 5.9:1 on the surface
-    hairline: "#dedede",
-    rule: "#111111",
-    accent: "#1a4be0",
-    field: "#111111",
-    fieldInk: "#ffffff",
-    fieldMuted: "#b3b3b3",
+    background: "#f6f0eb",
+    foreground: "#2c2325",
+    primary: "#9a3c4c",
+    primaryForeground: "#fffcf8",
+    primaryHover: "#7f2f3e",
+    surface: "#ebe0d9",
+    muted: "#665557",
+    rule: "#2c2325",
+    square: "#fffcf8", // answer squares sit a step lighter than the paper
+    block: "#2c2325",
   },
   fonts: {
-    body: "'IBM Plex Sans', Helvetica, Arial, sans-serif",
-    heading: "'IBM Plex Sans', Helvetica, Arial, sans-serif",
-    mono: "'IBM Plex Mono', 'Courier New', monospace",
+    body: "'Newsreader', Georgia, 'Times New Roman', serif",
+    heading: "'Newsreader', Georgia, 'Times New Roman', serif",
+    label: "'Hanken Grotesk', Helvetica, Arial, sans-serif",
   },
-  fontSizes: { body: 10.5 },
-  lineHeights: { body: 1.45 },
-  radii: { card: 6 },
+  fontSizes: { body: 13, label: 10, clue: 14 },
+  lineHeights: { body: 1.4 },
+  spacing: { clueGap: 8 },
+  radii: { button: 2 },
   elements: {
-    // Display weights 400/600 with tight tracking, sentence case everywhere.
     Heading: {
-      fontWeight: 600,
+      fontWeight: 500,
       by: {
         level: {
-          1: { fontSize: 36, lineHeight: 1, letterSpacing: -1.26 },
-          2: { fontSize: 15, lineHeight: 1.2, letterSpacing: -0.3 },
+          1: { fontSize: 40, lineHeight: 1, letterSpacing: -1 },
+          2: { fontSize: 16, lineHeight: 1.2 },
         },
       },
     },
-    Button: { borderRadius: 6, padding: [12, 20], fontWeight: 600 },
+    Button: {
+      fontFamily: "{fonts.label}",
+      fontWeight: 600,
+      borderRadius: "{radii.button}",
+      padding: [14, 24],
+      hover: { backgroundColor: "{colors.primaryHover}" },
+    },
   },
   styles: {
-    // The one card recipe.
-    card: { backgroundColor: "{colors.surface}", padding: 12, gap: 4, borderRadius: 6 },
+    // Small sans labels: the kicker, clue numbers, the clue-list titles.
+    label: { fontFamily: "{fonts.label}", fontSize: "{fontSizes.label}", fontWeight: 600 },
+    number: { fontFamily: "{fonts.label}", fontWeight: 600 },
+    muted: { color: "{colors.muted}" },
+    standfirst: { fontStyle: "italic", color: "{colors.muted}" },
+  },
+  formats: {
+    email: {
+      fontSizes: { body: 16, label: 12, clue: 16 },
+      lineHeights: { body: 1.5 },
+      elements: { Heading: { by: { level: { 1: { fontSize: 34, letterSpacing: -0.6 } } } } },
+    },
+    canvas: {
+      fontSizes: { body: 30, label: 24, clue: 30 },
+      lineHeights: { body: 1.3 },
+      elements: { Heading: { by: { level: { 1: { fontSize: 84, letterSpacing: -2 } } } } },
+    },
   },
 });
+
+declare module "@hyper-elements/react" {
+  interface Register {
+    theme: typeof crosswordTheme;
+  }
+}

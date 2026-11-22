@@ -1,57 +1,40 @@
-import {
-  Button, Column, Email, Heading, Row, Section, Span, Text, token,
-} from "@hyper-elements/react";
+import { Button, Email, MergeTag, Row, Section, Text, token } from "@hyper-elements/react";
 import { entries } from "./grid";
-import { CrosswordGrid } from "./elements";
+import { ClueList, CrosswordGrid, Masthead } from "./elements";
+import { webFonts } from "./fonts";
 import { crosswordTheme } from "./theme";
 import type { Puzzle } from "./types";
 
-const PLEX = "https://cdn.jsdelivr.net/fontsource/fonts";
-const emailFonts = [400, 600].flatMap((w) => [
-  { family: "IBM Plex Sans", src: `${PLEX}/ibm-plex-sans@latest/latin-${w}-normal.woff2`, format: "woff2", weight: w },
-  { family: "IBM Plex Mono", src: `${PLEX}/ibm-plex-mono@latest/latin-${w}-normal.woff2`, format: "woff2", weight: w },
-]) as never;
-
-const muted = { color: token("colors.muted") } as const;
-
-export function ClueList({ title, clues }: { title: string; clues: { number: number; clue: string }[] }) {
-  return (
-    <Column style={{ gap: 8 }}>
-      <Text style={{ fontWeight: 600 }}>{title}</Text>
-      {clues.map((c) => (
-        <Text key={c.number} style={{ fontSize: 15 }}>
-          <Span style={{ fontFamily: token("fonts.mono"), fontWeight: 600 }}>{`${c.number}\u00a0\u00a0`}</Span>
-          {c.clue}
-        </Text>
-      ))}
-    </Column>
-  );
-}
-
-export function CrosswordEmail({ puzzle }: { puzzle: Puzzle }) {
+/** The Monday email: masthead, the grid as table cells, both clue lists, one rose button, and the setter's note. */
+export function CrosswordEmail({ puzzle, theme = crosswordTheme }: { puzzle: Puzzle; theme?: typeof crosswordTheme }) {
   const { across, down } = entries(puzzle);
   return (
     <Email
-      theme={crosswordTheme}
+      theme={theme}
       width={600}
       lang="en"
-      fonts={emailFonts}
+      fonts={webFonts}
       title={`${puzzle.title} ${puzzle.issue}`}
-      previewText={`Five minutes, ten clues. ${puzzle.title} ${puzzle.issue} is ready.`}
-      style={{ fontSize: 16, lineHeight: 1.5, backgroundColor: "#ffffff", gap: 0 }}
+      previewText={`Ten clues, about five minutes. ${puzzle.title} ${puzzle.issue} is ready.`}
+      style={{ gap: 0 }}
     >
-      <Section style={{ padding: [32, 24, 20, 24], gap: 6 }}>
-        <Text style={{ ...muted, fontSize: 13 }}>{`${puzzle.issue} · ${puzzle.date}`}</Text>
-        <Heading level={1} style={{ fontSize: 32, letterSpacing: -0.8 }}>{puzzle.title}</Heading>
-        <Text style={muted}>{puzzle.author}</Text>
+      <Section style={{ padding: [32, 24, 24, 24] }}>
+        <Masthead kicker={`${puzzle.issue} · ${puzzle.date}`} title={puzzle.title}>
+          Morning, <MergeTag name="first_name" />. Ten clues, about five minutes.
+        </Masthead>
       </Section>
-      <Section style={{ padding: [0, 24, 24, 24], gap: 20 }}>
+      <Section style={{ padding: [0, 24, 32, 24], gap: 24 }}>
         <CrosswordGrid puzzle={puzzle} cell={56} />
         <Row style={{ gap: 24 }}>
           <ClueList title="Across" clues={across} />
           <ClueList title="Down" clues={down} />
         </Row>
-        <Button href={puzzle.solveUrl} style={{ fontSize: 16, padding: [14, 24] }}>Solve it online</Button>
+        <Button href={puzzle.solveUrl}>Solve it online</Button>
+      </Section>
+      <Section tokens={{ colors: { background: token("colors.surface") } }} style={{ padding: [20, 24], gap: 4 }}>
+        <Text style={{ apply: ["label"] }}>From the editor</Text>
+        <Text>{puzzle.note}</Text>
+        <Text style={{ apply: ["muted"], fontSize: 13 }}>{`${puzzle.author}. Answers run in next Monday's issue.`}</Text>
       </Section>
     </Email>
   );

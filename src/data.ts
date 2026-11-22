@@ -23,4 +23,5 @@ export const puzzle: Puzzle = {
     },
   },
   solveUrl: "https://mini.example/monday/12",
+  note: "Two music clues this week and one for anyone who has sat through a film shoot. Start in the middle row.",
 };

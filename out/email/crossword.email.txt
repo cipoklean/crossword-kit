@@ -2,7 +2,7 @@ No. 12 · Mon, Nov 30, 2026
 
 THE MONDAY MINI
 
-Edited by Ada Quill
+Morning, {{first_name}}. Ten clues, about five minutes.
 
 1 | 2 | 3 |  | 
 4 |  |  | 5 | 
@@ -35,3 +35,9 @@ Down
 7 Knot's sound-alike
 
 Solve it online (https://mini.example/monday/12)
+
+From the editor
+
+Two music clues this week and one for anyone who has sat through a film shoot. Start in the middle row.
+
+Edited by Ada Quill. Answers run in next Monday's issue.

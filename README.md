@@ -31,21 +31,31 @@ clues: {
 
 `#` is a block. You never number anything: `src/grid.ts` numbers the squares the standard way (a square starts an entry when the square before it is a block or the edge), and reads each answer out of the grid. A clue can't point at the wrong square, and the answer key can't disagree with the puzzle. Any rectangular grid works, not only 5 × 5.
 
+## The look
+
+A weekend paper's puzzle page: warm off-white paper (`#f6f0eb`), brown-black ink for type and blocks (`#2c2325`), answer squares a step lighter than the paper, and one deep rose (`#9a3c4c`) for the one thing to do, solving online. Newsreader, a text serif drawn for news, sets the title and clues; Hanken Grotesk sets the small numbers and labels. A heavy rule over a thin one heads every output, as a newspaper masthead does. Contrast on the paper: ink 13.5:1, the muted grey 6.2:1, rose 6.0:1.
+
 ## How Hyper Elements is used
 
 | Feature | Where | What it does here |
 |---|---|---|
-| `defineTheme` | `src/theme.ts` | One theme for all three outputs: black and white, IBM Plex, one blue |
-| Shared component | `src/elements.tsx` | `CrosswordGrid` is `Table`, `TableRow` and `TableCell`, sized by one `cell` prop: 56px in email, 88px in the PDF, 48px on the answer key, 160px on the card |
-| `Email` | `src/email.tsx` | 600px email: grid, clues in two columns (stacked on phones), button |
-| `validate` + `emailClients()` | `scripts/render-email.tsx` | Checks the email against 11 clients |
-| `renderInEmailClients` | `scripts/render-email.tsx --preview` | Previews in classic Outlook, the Gmail app and Apple Mail |
-| `Document` + `PageBreak` + `renderPdf` | `src/pdf.tsx`, `scripts/render-pdf.tsx` | Two Letter pages, with a `PageFooter` on each |
-| `Canvas` + `renderImage` | `src/card.tsx`, `scripts/render-card.tsx` | The share card as PNG and SVG |
+| `defineTheme` + `Register` | `src/theme.ts` | One typed theme: every `token()` and `apply` name is checked by `tsc` |
+| `formats` | `src/theme.ts` | Body, clue and heading sizes per root (print, email, canvas), so no root restyles by hand |
+| Named styles | `src/theme.ts` | `label`, `number`, `muted`, `standfirst`, shared by all three outputs |
+| Shared grid | `src/elements.tsx` | `CrosswordGrid` is `Table`, `TableRow` and `TableCell`, sized by one `cell` prop: 56px in email, 88px in the PDF, 48px on the answer key, 160px on the card |
+| `defineElement` | `src/elements.tsx` | `ClueList` is a custom element with typed props (a list of number, clue and answer), used in the email and both PDF pages |
+| `MergeTag` | `src/email.tsx` | "Morning, {{first_name}}." for your sending service to fill |
+| Scoped `tokens` | `src/email.tsx` | The editor's note band swaps the background token instead of restyling its children |
+| `Email` + `Button` hover | `src/email.tsx` | 600px email, clues side by side on desktop and stacked on phones |
+| `render` + `emailClients()` | `scripts/render-email.tsx` | Renders once and checks the email against 11 clients |
+| `renderInEmailClients` | `scripts/render-email.tsx --preview` | Previews the design itself (with `mergeTag` filling the name) in classic Outlook, the Gmail app and Apple Mail, light and dark |
+| `Document` + `PageBreak` + `PageFooter` + `renderPdf` | `src/pdf.tsx`, `scripts/render-pdf.tsx` | Two Letter pages; the print HTML loads the same web fonts |
+| `Canvas` + `fit` | `src/card.tsx` | The card's lines shrink to fit instead of wrapping |
+| `layoutImage` + `renderImage`, `strict` | `scripts/render-card.tsx` | Measures the card first; a missing glyph or anything past the canvas fails the build |
 
 ### What the client checks found
 
-`validate` finds no errors. The notes: classic Outlook draws the button with square corners and skips the heading's letter spacing, and web fonts fall back to Arial and Courier New in Outlook and Gmail. The grid itself needs nothing removed in any client: borders collapse, block squares fill, numbers stay top left.
+No errors or warnings. The notes, all cosmetic: Outlook and Gmail don't load web fonts, so the email falls back to Georgia and Arial; classic Outlook draws the title at normal weight, skips its letter spacing, squares the button's corners, and has no hover. The grid needs nothing removed in any client: borders collapse, blocks fill, numbers stay top left.
 
 ## Run it
 
@@ -63,7 +73,7 @@ npm run preview:email   # also writes email-client previews to out/email/preview
 | Command | Writes |
 |---|---|
 | `npm run render:email` | `out/email/crossword.email.html` and `.txt` |
-| `npm run preview:email` | The above, plus one HTML preview per client. Open them in Chrome or Chromium |
+| `npm run preview:email` | The above, plus one HTML preview per client in `out/email/previews/` (not committed; run this to make them). Open them in Chrome or Chromium |
 | `npm run render:pdf` | `out/crossword.pdf`, `out/crossword.print.html` |
 | `npm run render:card` | `out/crossword-card.png`, `out/crossword-card.svg` |
 
@@ -74,17 +84,18 @@ src/
   types.ts      Puzzle, Clue, Square
   data.ts       "The Monday Mini" No. 12
   grid.ts       numbering and answer reading
-  theme.ts      the shared theme
-  elements.tsx  CrosswordGrid, used by all three outputs
+  theme.ts      the shared, typed theme
+  fonts.ts      web fonts for the email and print HTML
+  elements.tsx  CrosswordGrid, ClueList and Masthead, shared by all three outputs
   email.tsx     Email root
   pdf.tsx       Document root
   card.tsx      Canvas root
 scripts/        one render script per output
-fonts/          IBM Plex Sans and Mono (SIL OFL 1.1)
+fonts/          Newsreader and Hanken Grotesk (SIL OFL 1.1)
 out/            rendered outputs, committed so you can look without installing
 docs/           README screenshots
 ```
 
 ## Licence
 
-Code: MIT. Fonts: IBM Plex, SIL Open Font License 1.1. The puzzle, its editor and the solve URL are made up.
+Code: MIT. Fonts: Newsreader and Hanken Grotesk, SIL Open Font License 1.1. The puzzle, its editor and the solve URL are made up.
