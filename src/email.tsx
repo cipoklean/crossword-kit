@@ -1,7 +1,8 @@
 import {
-  Button, Column, Email, Heading, List, ListItem, Row, Section, Span, Table, TableCell, TableRow, Text, token,
+  Button, Column, Email, Heading, Row, Section, Span, Text, token,
 } from "@hyper-elements/react";
-import { entries, numberGrid } from "./grid";
+import { entries } from "./grid";
+import { CrosswordGrid } from "./elements";
 import { crosswordTheme } from "./theme";
 import type { Puzzle } from "./types";
 
@@ -11,44 +12,9 @@ const emailFonts = [400, 600].flatMap((w) => [
   { family: "IBM Plex Mono", src: `${PLEX}/ibm-plex-mono@latest/latin-${w}-normal.woff2`, format: "woff2", weight: w },
 ]) as never;
 
-const CELL = 56;
-const ink = token("colors.foreground");
-const line = { width: 1, style: "solid", color: ink } as const;
 const muted = { color: token("colors.muted") } as const;
 
-/** The grid as plain table cells: the one layout every email client draws the same. */
-export function EmailGrid({ puzzle, solved = false }: { puzzle: Puzzle; solved?: boolean }) {
-  const squares = numberGrid(puzzle.grid);
-  return (
-    <Table style={{ width: CELL * squares[0].length, borderCollapse: "collapse", border: line }}>
-      {squares.map((row, r) => (
-        <TableRow key={r} style={{ height: CELL }}>
-          {row.map((s) => (
-            <TableCell
-              key={s.col}
-              style={{
-                width: CELL,
-                padding: [3, 0, 0, 4],
-                border: line,
-                verticalAlign: "top",
-                backgroundColor: s.block ? ink : "#ffffff",
-                fontSize: 11,
-                lineHeight: 1,
-              }}
-            >
-              <Span style={{ fontFamily: token("fonts.mono"), fontSize: 11 }}>{s.number ? String(s.number) : "\u00a0"}</Span>
-              {solved && !s.block ? (
-                <Span style={{ fontSize: 26, fontWeight: 600 }}>{`\n${s.letter}`}</Span>
-              ) : null}
-            </TableCell>
-          ))}
-        </TableRow>
-      ))}
-    </Table>
-  );
-}
-
-function ClueList({ title, clues }: { title: string; clues: { number: number; clue: string }[] }) {
+export function ClueList({ title, clues }: { title: string; clues: { number: number; clue: string }[] }) {
   return (
     <Column style={{ gap: 8 }}>
       <Text style={{ fontWeight: 600 }}>{title}</Text>
@@ -80,7 +46,7 @@ export function CrosswordEmail({ puzzle }: { puzzle: Puzzle }) {
         <Text style={muted}>{puzzle.author}</Text>
       </Section>
       <Section style={{ padding: [0, 24, 24, 24], gap: 20 }}>
-        <EmailGrid puzzle={puzzle} />
+        <CrosswordGrid puzzle={puzzle} cell={56} />
         <Row style={{ gap: 24 }}>
           <ClueList title="Across" clues={across} />
           <ClueList title="Down" clues={down} />

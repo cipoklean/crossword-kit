@@ -5,7 +5,8 @@
   "scripts": {
     "render:email": "tsx scripts/render-email.tsx",
     "preview:email": "tsx scripts/render-email.tsx --preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "render:pdf": "tsx scripts/render-pdf.tsx"
   },
   "keywords": [],
   "author": "cipoklean",
