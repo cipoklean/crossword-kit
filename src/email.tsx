@@ -51,7 +51,7 @@ export function CrosswordEmail({ puzzle }: { puzzle: Puzzle }) {
           <ClueList title="Across" clues={across} />
           <ClueList title="Down" clues={down} />
         </Row>
-        <Button href={puzzle.solveUrl}>Solve it online</Button>
+        <Button href={puzzle.solveUrl} style={{ fontSize: 16, padding: [14, 24] }}>Solve it online</Button>
       </Section>
     </Email>
   );

@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "One crossword, three outputs: an Outlook-safe email, a print PDF and a share card. Built with Hyper Elements.",
   "scripts": {
+    "render:pdf": "tsx scripts/render-pdf.tsx",
     "render:email": "tsx scripts/render-email.tsx",
     "preview:email": "tsx scripts/render-email.tsx --preview",
-    "typecheck": "tsc --noEmit",
-    "render:pdf": "tsx scripts/render-pdf.tsx"
+    "render:card": "tsx scripts/render-card.tsx",
+    "render": "npm run render:pdf && npm run render:email && npm run render:card",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "cipoklean",
