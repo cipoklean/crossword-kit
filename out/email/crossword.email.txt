@@ -10,33 +10,25 @@ Morning, {{first_name}}. Ten clues, about five minutes.
  | 8 |  |  | 
  |  | 9 |  | 
 
-Across
+ACROSS
 
-1 Serve nobody returns
+1 | Serve nobody returns
+4 | Residents of Olympus
+6 | Instrument with pipes
+8 | Rough recording before the album
+9 | Where the film crew works
 
-4 Residents of Olympus
+DOWN
 
-6 Instrument with pipes
-
-8 Rough recording before the album
-
-9 Where the film crew works
-
-Down
-
-1 Long ___ and far away
-
-2 Charger cable
-
-3 Puzzle pieces you sort first
-
-5 Not different
-
-7 Knot's sound-alike
+1 | Long ___ and far away
+2 | Charger cable
+3 | Puzzle pieces you sort first
+5 | Not different
+7 | Knot's sound-alike
 
 Solve it online (https://mini.example/monday/12)
 
-From the editor
+FROM THE EDITOR
 
 Two music clues this week and one for anyone who has sat through a film shoot. Start in the middle row.
 

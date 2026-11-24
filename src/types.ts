@@ -1,4 +1,4 @@
-/** "#" is a block; any letter is an answer square. Rows must be the same length. */
+/** "#" is a block; any letter is an answer square. Every row must be the same length. */
 export type Grid = string[];
 
 export interface Clue {
@@ -25,4 +25,6 @@ export interface Square {
   block: boolean;
   letter: string;
   number?: number;
+  startsAcross: boolean;
+  startsDown: boolean;
 }

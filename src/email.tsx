@@ -1,4 +1,4 @@
-import { Button, Email, MergeTag, Row, Section, Text, token } from "@hyper-elements/react";
+import { Button, Column, Email, Heading, Row, Section, Text, token } from "@hyper-elements/react";
 import { entries } from "./grid";
 import { ClueList, CrosswordGrid, Masthead } from "./elements";
 import { webFonts } from "./fonts";
@@ -19,12 +19,12 @@ export function CrosswordEmail({ puzzle, theme = crosswordTheme }: { puzzle: Puz
       style={{ gap: 0 }}
     >
       <Section style={{ padding: [32, 24, 24, 24] }}>
-        <Masthead kicker={`${puzzle.issue} · ${puzzle.date}`} title={puzzle.title}>
-          Morning, <MergeTag name="first_name" />. Ten clues, about five minutes.
-        </Masthead>
+        <Masthead kicker={`${puzzle.issue} · ${puzzle.date}`} title={puzzle.title} greetingMergeTag="first_name" standfirst={"Ten clues, about five\u00a0minutes."} />
       </Section>
       <Section style={{ padding: [0, 24, 32, 24], gap: 24 }}>
-        <CrosswordGrid puzzle={puzzle} cell={56} />
+        <Column style={{ alignItems: "center" }}>
+          <CrosswordGrid grid={puzzle.grid} cell={56} />
+        </Column>
         <Row style={{ gap: 24 }}>
           <ClueList title="Across" clues={across} />
           <ClueList title="Down" clues={down} />
@@ -32,9 +32,9 @@ export function CrosswordEmail({ puzzle, theme = crosswordTheme }: { puzzle: Puz
         <Button href={puzzle.solveUrl}>Solve it online</Button>
       </Section>
       <Section tokens={{ colors: { background: token("colors.surface") } }} style={{ padding: [20, 24], gap: 4 }}>
-        <Text style={{ apply: ["label"] }}>From the editor</Text>
+        <Heading level={2}>From the editor</Heading>
         <Text>{puzzle.note}</Text>
-        <Text style={{ apply: ["muted"], fontSize: 13 }}>{`${puzzle.author}. Answers run in next Monday's issue.`}</Text>
+        <Text style={{ apply: ["caption"] }}>{`${puzzle.author}. Answers run in next Monday's issue.`}</Text>
       </Section>
     </Email>
   );

@@ -22,7 +22,7 @@ export const crosswordTheme = defineTheme({
     heading: "'Newsreader', Georgia, 'Times New Roman', serif",
     label: "'Hanken Grotesk', Helvetica, Arial, sans-serif",
   },
-  fontSizes: { body: 13, label: 10, clue: 14 },
+  fontSizes: { body: 13, label: 10, clue: 14, caption: 10 },
   lineHeights: { body: 1.4 },
   spacing: { clueGap: 8 },
   radii: { button: 2 },
@@ -32,7 +32,8 @@ export const crosswordTheme = defineTheme({
       by: {
         level: {
           1: { fontSize: 40, lineHeight: 1, letterSpacing: -1 },
-          2: { fontSize: 16, lineHeight: 1.2 },
+          // Level 2 is the small sans section heading: Across, Down, From the editor.
+          2: { fontFamily: "{fonts.label}", fontSize: "{fontSizes.label}", fontWeight: 600, lineHeight: 1.2 },
         },
       },
     },
@@ -45,7 +46,8 @@ export const crosswordTheme = defineTheme({
     },
   },
   styles: {
-    // Small sans labels: the kicker, clue numbers, the clue-list titles.
+    caption: { fontSize: "{fontSizes.caption}", color: "{colors.muted}" },
+    // Small sans labels: the kicker.
     label: { fontFamily: "{fonts.label}", fontSize: "{fontSizes.label}", fontWeight: 600 },
     number: { fontFamily: "{fonts.label}", fontWeight: 600 },
     muted: { color: "{colors.muted}" },
@@ -53,12 +55,12 @@ export const crosswordTheme = defineTheme({
   },
   formats: {
     email: {
-      fontSizes: { body: 16, label: 12, clue: 16 },
+      fontSizes: { body: 16, label: 12, clue: 16, caption: 13 },
       lineHeights: { body: 1.5 },
-      elements: { Heading: { by: { level: { 1: { fontSize: 34, letterSpacing: -0.6 } } } } },
+      elements: { Heading: { by: { level: { 1: { fontSize: 34, letterSpacing: -0.6, mobile: { fontSize: 28 } } } } } },
     },
     canvas: {
-      fontSizes: { body: 30, label: 24, clue: 30 },
+      fontSizes: { body: 30, label: 24, clue: 30, caption: 24 },
       lineHeights: { body: 1.3 },
       elements: { Heading: { by: { level: { 1: { fontSize: 84, letterSpacing: -2 } } } } },
     },

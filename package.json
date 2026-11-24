@@ -10,7 +10,14 @@
     "render": "npm run render:pdf && npm run render:email && npm run render:card",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": [],
+  "keywords": [
+    "hyper-elements",
+    "crossword",
+    "email",
+    "pdf",
+    "react",
+    "newsletter"
+  ],
   "author": "cipoklean",
   "license": "MIT",
   "dependencies": {

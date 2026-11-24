@@ -10,6 +10,7 @@ await mkdir("out", { recursive: true });
 const report = validate(design);
 if (report.diagnostics.length) console.log(formatDiagnostics(report.diagnostics));
 if (process.argv.includes("--outline")) console.log(outline(design));
+if (!report.valid) process.exit(1);
 try {
   const { html } = await render(design);
   await writeFile("out/crossword.print.html", html);
